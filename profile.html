@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Familia Massawe — Wasifu Wangu</title>
+<style>
+:root {
+  --green-dark: #0a4a2e;
+  --green-mid: #1a7a4a;
+  --green-light: #e8f5ee;
+  --green-pale: #f2faf6;
+  --gold: #c9a84c;
+  --gold-light: #f5e6b8;
+  --gold-dark: #a07830;
+  --text: #1a1a1a;
+  --text-muted: #5a6a5a;
+  --white: #ffffff;
+  --border: #c8ddd0;
+  --error: #c0392b;
+  --success: #1a7a4a;
+  --radius: 12px;
+  --shadow: 0 2px 16px rgba(10,74,46,0.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: var(--green-pale);
+  color: var(--text);
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+.topbar {
+  background: linear-gradient(135deg, var(--green-dark), var(--green-mid));
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 58px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+.topbar-left { display: flex; align-items: center; gap: 10px; }
+.topbar-logo { font-size: 22px; }
+.topbar-title { color: var(--white); font-size: 16px; font-weight: 700; }
+.topbar-sub { color: var(--gold-light); font-size: 12px; opacity: 0.8; }
+.back-btn {
+  color: var(--gold-light);
+  text-decoration: none;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid rgba(201,168,76,0.35);
+  border-radius: 20px;
+  transition: background 0.2s;
+  cursor: pointer;
+  background: none;
+}
+.back-btn:hover { background: rgba(255,255,255,0.1); }
+.page { max-width: 720px; margin: 0 auto; padding: 24px 16px 60px; }
+.section-card {
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px 14px;
+  border-bottom: 1.5px solid var(--green-light);
+}
+.section-icon {
+  width: 38px; height: 38px;
+  background: var(--green-light);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.section-head h2 { font-size: 16px; font-weight: 700; color: var(--green-dark); }
+.section-head p { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+.section-body { padding: 20px; }
+
+/* Photo */
+.photo-area {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 18px;
+}
+.photo-ring {
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  border: 3px solid var(--gold);
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--green-light);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  cursor: pointer;
+}
+.photo-ring img { width: 100%; height: 100%; object-fit: cover; display: none; }
+.photo-ring .ph-icon { font-size: 36px; }
+#photo-input { display: none; }
+.photo-info h3 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.photo-info p { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+.upload-btn {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 7px 16px;
+  background: var(--green-light);
+  color: var(--green-dark);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.upload-btn:hover { background: #d2eddc; }
+
+/* Form fields */
+.fields-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+@media (max-width: 520px) { .fields-grid { grid-template-columns: 1fr; } }
+.field-full { grid-column: 1 / -1; }
+.field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 5px;
+}
+.field input, .field select, .field textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 14px;
+  color: var(--text);
+  background: var(--green-pale);
+  outline: none;
+  transition: border-color 0.2s;
+  font-family: inherit;
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  border-color: var(--green-mid);
+  background: var(--white);
+}
+.field input[readonly], .field input[disabled] {
+  background: #f0f0f0 !important;
+  color: var(--text-muted);
+  cursor: not-allowed;
+  border-color: #ddd;
+}
+
+/* Mzazi search box (NEW) */
+.mzazi-box {
+  background: var(--green-pale);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-top: 4px;
+}
+.search-mzazi-wrap { position: relative; }
+.search-mzazi-wrap input { padding-right: 38px; }
+.mzazi-results {
+  position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  z-index: 50;
+  max-height: 220px; overflow-y: auto;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  display: none;
+}
+.mzazi-results.open { display: block; }
+.mzazi-item { padding: 10px 14px; cursor: pointer; font-size: 13px; border-bottom: 1px solid var(--green-light); }
+.mzazi-item:hover { background: var(--green-light); }
+.mzazi-item:last-child { border-bottom: none; }
+.mzazi-item .mzazi-kizazi { font-size: 11px; color: var(--text-muted); }
+.mzazi-selected {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 14px; margin-top: 8px;
+  background: var(--green-light);
+  border: 1.5px solid var(--green-mid);
+  border-radius: var(--radius);
+}
+.mzazi-selected span.mz-name { font-size: 13px; font-weight: 700; color: var(--green-dark); flex: 1; }
+.mzazi-clear { background: none; border: none; cursor: pointer; font-size: 16px; color: var(--error); padding: 0; }
+.kizazi-now {
+  margin-top: 10px;
+  padding: 9px 14px;
+  background: var(--gold-light);
+  border: 1.5px solid var(--gold);
+  border-radius: var(--radius);
+  font-size: 13px; font-weight: 700;
+  color: var(--green-dark);
+  text-align: center;
+}
+.status-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; font-weight: 700;
+  padding: 4px 10px; border-radius: 20px;
+  margin-top: 8px;
+}
+.status-pill.pending { background: #fff8e1; color: var(--gold-dark); border: 1px solid var(--gold); }
+.status-pill.confirmed { background: var(--green-light); color: var(--green-dark); border: 1px solid var(--green-mid); }
+
+/* Password toggle */
+.pw-wrap { position: relative; }
+.pw-wrap input { padding-right: 44px; }
+.pw-eye {
+  position: absolute;
+  right: 12px; top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--text-muted);
+  padding: 0;
+  line-height: 1;
+}
+
+/* Email info badge */
+.email-note {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 5px;
+  font-size: 11px;
+  color: var(--gold-dark);
+  background: var(--gold-light);
+  padding: 5px 10px;
+  border-radius: 8px;
+}
+
+/* Wenzi */
+.wenzi-list { display: flex; flex-direction: column; gap: 14px; }
+.mwenza-card {
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--green-pale);
+  transition: border-color 0.2s;
+}
+.mwenza-card:hover { border-color: var(--green-mid); }
+.mwenza-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--green-light);
+  cursor: pointer;
+  user-select: none;
+}
+.mwenza-head-left { display: flex; align-items: center; gap: 10px; }
+.mwenza-avatar {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: var(--gold-light);
+  border: 2px solid var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.mwenza-name { font-weight: 700; font-size: 14px; color: var(--green-dark); }
+.mwenza-label { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+.mwenza-actions { display: flex; align-items: center; gap: 8px; }
+.chevron { font-size: 12px; color: var(--text-muted); transition: transform 0.2s; }
+.mwenza-card.open .chevron { transform: rotate(180deg); }
+.del-btn {
+  background: none; border: none;
+  cursor: pointer; font-size: 16px;
+  padding: 4px; border-radius: 6px;
+  transition: background 0.2s; color: #c0392b;
+}
+.del-btn:hover { background: #fdecea; }
+.mwenza-body { display: none; padding: 16px; }
+.mwenza-card.open .mwenza-body { display: block; }
+
+/* Watoto */
+.watoto-section { margin-top: 16px; }
+.watoto-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.watoto-head h4 { font-size: 13px; font-weight: 700; color: var(--green-dark); }
+.add-mtoto-btn {
+  font-size: 12px; font-weight: 600;
+  color: var(--green-mid);
+  background: var(--green-light);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.add-mtoto-btn:hover { background: #d2eddc; }
+.watoto-list { display: flex; flex-direction: column; gap: 8px; }
+.mtoto-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.mtoto-row input {
+  flex: 1; min-width: 120px;
+  padding: 8px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px; font-size: 13px;
+  background: var(--white); outline: none;
+  font-family: inherit;
+}
+.mtoto-row input:focus { border-color: var(--green-mid); }
+.mtoto-row select {
+  padding: 8px 10px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+  background: var(--white); outline: none;
+  font-family: inherit;
+}
+.mtoto-del {
+  background: none; border: none;
+  cursor: pointer; font-size: 16px;
+  color: #c0392b; padding: 4px;
+  border-radius: 6px; flex-shrink: 0;
+}
+.mtoto-del:hover { background: #fdecea; }
+.add-mwenza-btn {
+  width: 100%; padding: 13px;
+  background: none;
+  border: 2px dashed var(--green-mid);
+  border-radius: 12px;
+  color: var(--green-mid);
+  font-size: 14px; font-weight: 600;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: background 0.2s;
+  font-family: inherit;
+}
+.add-mwenza-btn:hover { background: var(--green-light); }
+
+/* Save bar */
+.save-bar {
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.save-bar-msg { font-size: 13px; color: var(--text-muted); flex: 1; min-width: 160px; }
+.btn-save {
+  padding: 12px 28px;
+  background: linear-gradient(135deg, var(--green-dark), var(--green-mid));
+  color: var(--white);
+  border: none; border-radius: var(--radius);
+  font-size: 15px; font-weight: 700;
+  cursor: pointer; transition: opacity 0.2s;
+  white-space: nowrap; font-family: inherit;
+}
+.btn-save:hover { opacity: 0.88; }
+.btn-save:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Danger zone */
+.danger-zone {
+  background: #fff5f5;
+  border: 1.5px solid #fca5a5;
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin-bottom: 14px;
+}
+.danger-zone h3 {
+  font-size: 14px; font-weight: 700;
+  color: #c0392b; margin-bottom: 6px;
+  display: flex; align-items: center; gap: 6px;
+}
+.danger-zone p { font-size: 12px; color: #888; margin-bottom: 12px; line-height: 1.5; }
+.danger-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+.btn-danger {
+  padding: 10px 18px;
+  background: #fdecea;
+  color: #c0392b;
+  border: 1.5px solid #f5c6c2;
+  border-radius: 10px;
+  font-size: 13px; font-weight: 700;
+  cursor: pointer; transition: background 0.2s;
+  font-family: inherit;
+}
+.btn-danger:hover { background: #f5c6c2; }
+.btn-danger-hard {
+  padding: 10px 18px;
+  background: #c0392b;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 13px; font-weight: 700;
+  cursor: pointer; transition: opacity 0.2s;
+  font-family: inherit;
+}
+.btn-danger-hard:hover { opacity: 0.85; }
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--green-dark);
+  color: var(--white);
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 14px; font-weight: 600;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  transition: transform 0.35s cubic-bezier(.34,1.56,.64,1);
+  z-index: 999;
+  white-space: nowrap;
+  max-width: 90vw;
+  text-align: center;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast.error { background: var(--error); }
+</style>
+</head>
+<body>
+
+<!-- Topbar -->
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="topbar-logo">🌳</div>
+    <div>
+      <div class="topbar-title">Familia Massawe</div>
+      <div class="topbar-sub">Wasifu Wangu</div>
+    </div>
+  </div>
+  <button class="back-btn" onclick="goHome()">← Nyumbani</button>
+</div>
+
+<div class="page">
+
+  <!-- TAARIFA ZA MSINGI -->
+  <div class="section-card">
+    <div class="section-head">
+      <div class="section-icon">👤</div>
+      <div>
+        <h2>Taarifa Zangu</h2>
+        <p>Bonyeza picha ili kubadilisha</p>
+      </div>
+    </div>
+    <div class="section-body">
+      <!-- Photo -->
+      <div class="photo-area">
+        <div class="photo-ring" onclick="document.getElementById('photo-input').click()">
+          <span class="ph-icon">👤</span>
+          <img id="profile-img" alt="Picha ya wasifu">
+        </div>
+        <div class="photo-info">
+          <h3 id="display-name">Jina lako litaonekana hapa</h3>
+          <p>Bonyeza picha kubadilisha<br>JPG au PNG, hadi 5MB</p>
+          <label class="upload-btn" for="photo-input">📷 Chagua Picha</label>
+          <input type="file" id="photo-input" accept="image/*" onchange="previewPhoto(this)">
+        </div>
+      </div>
+
+      <!-- Fields -->
+      <div class="fields-grid">
+        <div class="field field-full">
+          <label>Jina Kamili</label>
+          <input type="text" id="full-name" placeholder="Jina na Ukoo"
+            oninput="document.getElementById('display-name').textContent=this.value||'Jina lako litaonekana hapa'">
+        </div>
+
+        <!-- EMAIL YA LOGIN — readonly, haiwezi kubadilishwa -->
+        <div class="field field-full">
+          <label>Barua Pepe ya Kuingia (Login)</label>
+          <input type="email" id="login-email" readonly placeholder="barua@pepe.com">
+          <div class="email-note">🔒 Barua pepe hii ndiyo unayotumia kuingia — haiwezi kubadilishwa hapa.</div>
+        </div>
+
+        <div class="field">
+          <label>Namba ya Simu</label>
+          <input type="tel" id="phone" placeholder="+255 7XX XXX XXX">
+        </div>
+        <div class="field">
+          <label>Tarehe ya Kuzaliwa</label>
+          <input type="date" id="dob">
+        </div>
+        <div class="field">
+          <label>Jinsia</label>
+          <select id="gender" onchange="onGenderChange()">
+            <option value="">-- Chagua --</option>
+            <option value="M">Mwanaume</option>
+            <option value="F">Mwanamke</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Mji / Mkoa</label>
+          <input type="text" id="location" placeholder="mfano: Iringa, Tanzania">
+        </div>
+        <div class="field field-full">
+          <label>Kazi / Taaluma</label>
+          <input type="text" id="occupation" placeholder="mfano: Mkulima, Mwalimu, Daktari...">
+        </div>
+        <div class="field field-full">
+          <label>Cheo / Nafasi katika Ukoo</label>
+          <input type="text" id="cheo" placeholder="mfano: Mwenyekiti, Katibu, Mzee wa Ukoo...">
+          <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">
+            Kama una nafasi ya uongozi, jaza hapa. Itaonekana kwenye ukurasa wa Viongozi kiotomatiki.
+          </div>
+        </div>
+        <div class="field field-full">
+          <label>Maelezo Mafupi (Bio)</label>
+          <textarea id="maelezo" placeholder="Habari fupi kuhusu wewe..." rows="3" style="resize:vertical"></textarea>
+        </div>
+        <div class="field">
+          <label>Hali</label>
+          <select id="hali">
+            <option value="Hai">Hai</option>
+            <option value="Amefariki">Amefariki</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MZAZI WANGU (NEW SECTION) -->
+  <div class="section-card">
+    <div class="section-head">
+      <div class="section-icon">🌳</div>
+      <div>
+        <h2>Mzazi Wangu</h2>
+        <p>Hii ndiyo inayokuweka mahali pako kwenye mti wa ukoo</p>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="mzazi-box">
+        <label style="display:block;font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:7px;">
+          Tafuta na Chagua Mzazi (Baba au Mama)
+        </label>
+        <div class="search-mzazi-wrap">
+          <input type="text" id="mzazi-search" placeholder="🔍 Andika jina la mzazi wako..." oninput="searchMzazi(this.value)" autocomplete="off">
+          <div class="mzazi-results" id="mzazi-results"></div>
+        </div>
+
+        <div id="mzazi-selected-wrap" style="display:none;">
+          <div class="mzazi-selected">
+            <span>👤</span>
+            <span class="mz-name" id="mzazi-selected-name"></span>
+            <button class="mzazi-clear" onclick="clearMzazi()" title="Ondoa">✕</button>
+          </div>
+        </div>
+
+        <div class="field" style="margin-top:10px;margin-bottom:0;">
+          <label style="text-transform:none;font-size:11px;">Au andika jina la mzazi (kama hayupo bado kwenye mfumo)</label>
+          <input type="text" id="mzazi-jina-manual" placeholder="mfano: Nusura Lamwel Massawe">
+        </div>
+
+        <div class="kizazi-now" id="kizazi-now">
+          ⏳ Chagua mzazi ili kizazi chako kihesabiwe kiotomatiki
+        </div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:8px;line-height:1.5;">
+          💡 Ukibadilisha mzazi na ukahifadhi, mti wa ukoo utasasishwa <strong>papo hapo</strong> — hauitaji uthibitisho mpya wa admin kama tayari umeshathibitishwa.
+        </div>
+
+        <div id="status-wrap"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WENZI NA WATOTO -->
+  <div class="section-card">
+    <div class="section-head">
+      <div class="section-icon">👨‍👩‍👧‍👦</div>
+      <div>
+        <h2>Wenzi na Watoto</h2>
+        <p>Mke/Mume na watoto mliopata pamoja</p>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="wenzi-list" id="wenzi-list"></div>
+      <button class="add-mwenza-btn" onclick="addMwenza()" style="margin-top:14px">
+        ➕ Ongeza Mke / Mume
+      </button>
+    </div>
+  </div>
+
+  <!-- SAVE BAR -->
+  <div class="save-bar">
+    <div class="save-bar-msg" id="save-msg">Mabadiliko yako hayajahifadhiwa bado.</div>
+    <button class="btn-save" onclick="saveProfile()">💾 Hifadhi Mabadiliko</button>
+  </div>
+
+  <!-- DANGER ZONE -->
+  <div class="danger-zone" id="danger-section" style="display:none">
+    <h3>⚠️ Eneo la Hatari</h3>
+    <p>
+      Chaguzi hizi zina athari kubwa na haziwezi kutenduliwa.
+      Tumia kwa tahadhari kubwa. Admin peke yake anaona sehemu hii.
+    </p>
+    <div class="danger-btns">
+      <button class="btn-danger" onclick="deleteMyProfile()">
+        🗑️ Futa Wasifu Wangu
+      </button>
+      <button class="btn-danger-hard" onclick="deleteAllData()">
+        ☢️ Futa WOTE — Profiles + Wanafamilia
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+const SUPABASE_URL = 'https://euhteovuhdvefzaavlqx.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV1aHRlb3Z1aGR2ZWZ6YWF2bHF4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1NjQwNjEsImV4cCI6MjA5NzE0MDA2MX0.gaV1mShFhVHVpxAqCptJsiSr4r-d3_OYvdtH0bpR58Q';
+
+let currentUser = null;
+let wenziCount = 0;
+let photoFile = null;
+let myMemberId = null; // ID ya rekodi yangu katika wanafamilia
+let myInasubiri = false;
+let allWanafamilia = []; // kwa search ya mzazi
+let selectedMzaziId = null;
+let selectedMzaziKizazi = null;
+
+// ── Init ────────────────────────────────────────────────
+window.onload = async () => {
+  const token = localStorage.getItem('sb_token');
+  const userStr = localStorage.getItem('sb_user');
+  if (!token || !userStr) { window.location.href = 'login.html'; return; }
+  currentUser = JSON.parse(userStr);
+
+  // Onyesha email ya login (readonly)
+  document.getElementById('login-email').value = currentUser.email || '';
+
+  await loadWanafamiliaForSearch();
+  await loadProfile();
+  await loadWenzi();
+  await checkAdmin();
+};
+
+// ── Supabase Helpers ─────────────────────────────────────
+function sbHeaders(extra = {}) {
+  const token = localStorage.getItem('sb_token');
+  return {
+    'Content-Type': 'application/json',
+    'apikey': SUPABASE_KEY,
+    'Authorization': 'Bearer ' + token,
+    'Prefer': 'return=representation',
+    ...extra
+  };
+}
+async function sbGet(path) {
+  try {
+    const r = await fetch(SUPABASE_URL + path, { headers: sbHeaders() });
+    if (!r.ok) return [];
+    return r.json();
+  } catch(e) { return []; }
+}
+async function sbUpsert(table, data) {
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+    method: 'POST',
+    headers: sbHeaders({ 'Prefer': 'resolution=merge-duplicates,return=representation' }),
+    body: JSON.stringify(data)
+  });
+  return r.json();
+}
+async function sbPatch(table, id, data) {
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}?id=eq.${id}`, {
+    method: 'PATCH',
+    headers: sbHeaders(),
+    body: JSON.stringify(data)
+  });
+  return r.json();
+}
+async function sbDelete(table, filter) {
+  await fetch(`${SUPABASE_URL}/rest/v1/${table}?${filter}`, {
+    method: 'DELETE',
+    headers: sbHeaders()
+  });
+}
+
+// ── MZAZI: search + select ───────────────────────────────
+async function loadWanafamiliaForSearch() {
+  try {
+    const data = await sbGet('/rest/v1/wanafamilia?select=id,jina,kizazi,jinsia,user_id&order=jina.asc');
+    allWanafamilia = Array.isArray(data) ? data : [];
+  } catch(e) { allWanafamilia = []; }
+}
+
+function searchMzazi(query) {
+  const results = document.getElementById('mzazi-results');
+  if (!query || query.length < 2) { results.classList.remove('open'); return; }
+  const q = query.toLowerCase();
+  const found = allWanafamilia
+    .filter(m => (m.jina||'').toLowerCase().includes(q) && (!currentUser || m.user_id !== currentUser.id))
+    .slice(0, 8);
+  if (found.length === 0) {
+    results.innerHTML = '<div class="mzazi-item" style="color:var(--text-muted);">Hakuna mtu aliyepatikana</div>';
+  } else {
+    results.innerHTML = found.map(m => `
+      <div class="mzazi-item" onclick="selectMzazi(${m.id},'${(m.jina||'').replace(/'/g,"\\'")}',${m.kizazi||1})">
+        <div>${m.jinsia==='F'?'👩':'👨'} <strong>${m.jina}</strong></div>
+        <div class="mzazi-kizazi">Kizazi cha ${m.kizazi||'?'}</div>
+      </div>
+    `).join('');
+  }
+  results.classList.add('open');
+}
+
+function selectMzazi(id, jina, kizazi) {
+  selectedMzaziId = id;
+  selectedMzaziKizazi = kizazi || 1;
+  document.getElementById('mzazi-search').value = '';
+  document.getElementById('mzazi-results').classList.remove('open');
+  document.getElementById('mzazi-selected-name').textContent = jina;
+  document.getElementById('mzazi-selected-wrap').style.display = 'block';
+  document.getElementById('mzazi-jina-manual').value = '';
+  updateKizaziDisplay();
+}
+
+function clearMzazi() {
+  selectedMzaziId = null;
+  selectedMzaziKizazi = null;
+  document.getElementById('mzazi-selected-wrap').style.display = 'none';
+  document.getElementById('mzazi-selected-name').textContent = '';
+  updateKizaziDisplay();
+}
+
+function updateKizaziDisplay() {
+  const el = document.getElementById('kizazi-now');
+  if (selectedMzaziKizazi) {
+    const kizaziMtoto = selectedMzaziKizazi + 1;
+    el.innerHTML = `🌱 Kizazi chako: <strong>${kizaziMtoto}</strong> — (kinahesabiwa kiotomatiki kutoka kwa mzazi)`;
+  } else {
+    el.textContent = '⏳ Chagua mzazi ili kizazi chako kihesabiwe kiotomatiki';
+  }
+}
+
+function onGenderChange() {
+  // hauhitaji kufanya lolote maalum hapa kwa sasa
+}
+
+function renderStatusPill() {
+  const wrap = document.getElementById('status-wrap');
+  if (myInasubiri) {
+    wrap.innerHTML = `<div class="status-pill pending">⏳ Unasubiri uthibitisho wa Admin ili uonekane kwenye mti</div>`;
+  } else if (myMemberId) {
+    wrap.innerHTML = `<div class="status-pill confirmed">✅ Umethibitishwa — unaonekana kwenye mti wa familia</div>`;
+  } else {
+    wrap.innerHTML = '';
+  }
+}
+
+// ── Load Profile ─────────────────────────────────────────
+async function loadProfile() {
+  const data = await sbGet(`/rest/v1/wanafamilia?user_id=eq.${currentUser.id}&limit=1`);
+  if (data && data.length > 0) {
+    const p = data[0];
+    myMemberId = p.id;
+    myInasubiri = !!p.inasubiri_uthibitisho;
+
+    // Jina — angalia field zote mbili
+    const jina = p.jina || p.jina_kamili || p.full_name || '';
+    setVal('full-name', jina);
+    document.getElementById('display-name').textContent = jina || 'Jina lako';
+
+    // Taarifa nyingine
+    setVal('phone', p.simu || p.phone || '');
+    setVal('dob', p.tarehe_kuzaliwa || p.dob || '');
+    setVal('gender', p.jinsia || p.gender || '');
+    setVal('location', p.mji || p.location || '');
+    setVal('occupation', p.kazi || p.occupation || '');
+    setVal('cheo', p.cheo || '');
+    setVal('maelezo', p.maelezo || '');
+    setVal('hali', p.hali || 'Hai');
+
+    // Mzazi
+    if (p.mzazi_id) {
+      const mzazi = allWanafamilia.find(m => m.id === p.mzazi_id);
+      if (mzazi) {
+        selectMzazi(mzazi.id, mzazi.jina, mzazi.kizazi);
+      } else {
+        selectedMzaziId = p.mzazi_id;
+        selectedMzaziKizazi = (p.kizazi || 2) - 1;
+        document.getElementById('mzazi-selected-name').textContent = '(Mzazi aliyepo kwenye mfumo)';
+        document.getElementById('mzazi-selected-wrap').style.display = 'block';
+      }
+    } else if (p.jina_mzazi_maandishi) {
+      document.getElementById('mzazi-jina-manual').value = p.jina_mzazi_maandishi;
+    }
+
+    if (p.kizazi) {
+      document.getElementById('kizazi-now').innerHTML =
+        `🌱 Kizazi chako: <strong>${p.kizazi}</strong> — (kinahesabiwa kiotomatiki kutoka kwa mzazi)`;
+    } else {
+      updateKizaziDisplay();
+    }
+
+    renderStatusPill();
+
+    // Picha
+    if (p.photo_url) {
+      const img = document.getElementById('profile-img');
+      img.src = p.photo_url;
+      img.style.display = 'block';
+      document.querySelector('.ph-icon').style.display = 'none';
+    }
+  } else {
+    // Mtumiaji hana rekodi bado (haiwezekani sana kwa signup mpya, lakini kwa usalama)
+    updateKizaziDisplay();
+  }
+}
+function setVal(id, val) {
+  const el = document.getElementById(id);
+  if (el && val !== undefined && val !== null) el.value = val;
+}
+
+// ── Check Admin ───────────────────────────────────────────
+async function checkAdmin() {
+  try {
+    // Angalia kwenye wanafamilia kama ni_admin = true
+    const data = await sbGet(`/rest/v1/wanafamilia?user_id=eq.${currentUser.id}&ni_admin=eq.true&limit=1`);
+    if (data && data.length > 0) {
+      document.getElementById('danger-section').style.display = 'block';
+    }
+  } catch(e) {}
+}
+
+// ── Photo Preview ─────────────────────────────────────────
+function previewPhoto(input) {
+  if (!input.files || !input.files[0]) return;
+  photoFile = input.files[0];
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = document.getElementById('profile-img');
+    img.src = e.target.result;
+    img.style.display = 'block';
+    document.querySelector('.ph-icon').style.display = 'none';
+  };
+  reader.readAsDataURL(photoFile);
+  document.getElementById('save-msg').textContent = 'Una mabadiliko ya picha. Bonyeza Hifadhi.';
+}
+
+// ── Load Wenzi ────────────────────────────────────────────
+async function loadWenzi() {
+  const memberId = myMemberId || currentUser.id;
+  const data = await sbGet(`/rest/v1/wenzi?member_id=eq.${memberId}`);
+  const list = document.getElementById('wenzi-list');
+  list.innerHTML = '';
+  wenziCount = 0;
+  if (data && Array.isArray(data)) {
+    for (const w of data) {
+      const watoto = await sbGet(`/rest/v1/watoto?mwenza_id=eq.${w.id}`);
+      addMwenzaCard(w, watoto || []);
+    }
+  }
+}
+
+// ── Add Mwenza ────────────────────────────────────────────
+function addMwenza() {
+  addMwenzaCard({ id: null, jina: '', tarehe_ndoa: '', hali: 'Ndoa', simu: '' }, []);
+}
+
+function addMwenzaCard(mwenza, watoto) {
+  wenziCount++;
+  const idx = wenziCount;
+  const list = document.getElementById('wenzi-list');
+  const card = document.createElement('div');
+  card.className = 'mwenza-card';
+  card.id = 'mwenza-card-' + idx;
+  card.dataset.id = mwenza.id || '';
+
+  const watotoHtml = watoto.map((mt, mi) => mtotoRow(idx, mi+1, mt)).join('');
+
+  card.innerHTML = `
+    <div class="mwenza-head" onclick="toggleMwenza(${idx})">
+      <div class="mwenza-head-left">
+        <div class="mwenza-avatar">💍</div>
+        <div>
+          <div class="mwenza-name" id="mwenza-label-name-${idx}">${mwenza.jina || 'Mke/Mume Mpya'}</div>
+          <div class="mwenza-label">${mwenza.hali || 'Ndoa'}</div>
+        </div>
+      </div>
+      <div class="mwenza-actions">
+        <button class="del-btn" onclick="deleteMwenza(event, ${idx})" title="Futa">🗑️</button>
+        <span class="chevron">▼</span>
+      </div>
+    </div>
+    <div class="mwenza-body">
+      <div class="fields-grid">
+        <div class="field field-full">
+          <label>Jina Kamili la Mke/Mume</label>
+          <input type="text" id="mw-jina-${idx}" value="${mwenza.jina||''}" placeholder="Jina kamili"
+            oninput="document.getElementById('mwenza-label-name-${idx}').textContent=this.value||'Mke/Mume Mpya'">
+        </div>
+        <div class="field">
+          <label>Tarehe ya Ndoa</label>
+          <input type="date" id="mw-tarehe-${idx}" value="${mwenza.tarehe_ndoa||''}">
+        </div>
+        <div class="field">
+          <label>Hali ya Ndoa</label>
+          <select id="mw-hali-${idx}">
+            <option value="Uchumba" ${mwenza.hali==='Uchumba'?'selected':''}>💍 Uchumba</option>
+            <option value="Ndoa" ${(mwenza.hali||'Ndoa')==='Ndoa'?'selected':''}>Ndoa (Hai)</option>
+            <option value="Talaka" ${mwenza.hali==='Talaka'?'selected':''}>Wameachana</option>
+            <option value="Mauti" ${mwenza.hali==='Mauti'?'selected':''}>Amefariki</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Simu yake</label>
+          <input type="tel" id="mw-simu-${idx}" value="${mwenza.simu||''}" placeholder="+255...">
+        </div>
+      </div>
+
+      <!-- Watoto wao -->
+      <div class="watoto-section">
+        <div class="watoto-head">
+          <h4>👶 Watoto waliopatikana na mke/mume huyu</h4>
+          <button class="add-mtoto-btn" onclick="addMtoto(${idx})">+ Mtoto</button>
+        </div>
+        <div class="watoto-list" id="watoto-list-${idx}">
+          ${watotoHtml}
+        </div>
+      </div>
+    </div>
+  `;
+  list.appendChild(card);
+  toggleMwenza(idx);
+}
+
+function mtotoRow(mwenzaIdx, mtotoNum, mtoto) {
+  const rowId = `mtoto-row-${mwenzaIdx}-${mtotoNum}`;
+  return `
+    <div class="mtoto-row" id="${rowId}" data-id="${mtoto.id||''}" data-wf-id="${mtoto.wanafamilia_id||''}">
+      <input type="text" placeholder="Jina la mtoto" value="${mtoto.jina||''}">
+      <input type="date" value="${mtoto.tarehe_kuzaliwa||''}" style="max-width:150px">
+      <select>
+        <option value="M" ${(mtoto.jinsia||'M')==='M'?'selected':''}>Mvulana</option>
+        <option value="F" ${mtoto.jinsia==='F'?'selected':''}>Msichana</option>
+      </select>
+      <button class="mtoto-del" onclick="this.closest('.mtoto-row').remove()" title="Futa mtoto">🗑️</button>
+    </div>
+  `;
+}
+function addMtoto(mwenzaIdx) {
+  const list = document.getElementById('watoto-list-' + mwenzaIdx);
+  const num = list.children.length + 1;
+  const div = document.createElement('div');
+  div.innerHTML = mtotoRow(mwenzaIdx, num, {});
+  list.appendChild(div.firstElementChild);
+}
+function toggleMwenza(idx) {
+  document.getElementById('mwenza-card-' + idx).classList.toggle('open');
+}
+function deleteMwenza(e, idx) {
+  e.stopPropagation();
+  if (!confirm('Una uhakika kutoa mke/mume huyu?')) return;
+  const card = document.getElementById('mwenza-card-' + idx);
+  const id = card.dataset.id;
+  if (id) sbDelete('wenzi', `id=eq.${id}`);
+  card.remove();
+}
+
+// ── Save Profile ──────────────────────────────────────────
+async function saveProfile() {
+  const btn = document.querySelector('.btn-save');
+  btn.disabled = true;
+  btn.textContent = '⏳ Inahifadhi...';
+
+  try {
+    // 1. Pakia picha kama ipo
+    let photoUrl = null;
+    if (photoFile) {
+      const token = localStorage.getItem('sb_token');
+      const ext = photoFile.name.split('.').pop();
+      const path = `profiles/${currentUser.id}.${ext}`;
+      const upResp = await fetch(`${SUPABASE_URL}/storage/v1/object/profile-photos/${path}`, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': photoFile.type,
+          'x-upsert': 'true'
+        },
+        body: photoFile
+      });
+      if (upResp.ok) {
+        photoUrl = `${SUPABASE_URL}/storage/v1/object/public/profile-photos/${path}`;
+      }
+    }
+
+    // 2. Hesabu kizazi kutoka kwa mzazi aliyechaguliwa
+    let kizaziValue = null;
+    if (selectedMzaziKizazi) {
+      kizaziValue = selectedMzaziKizazi + 1;
+    }
+
+    const jinaValue = document.getElementById('full-name').value.trim();
+    const mzaziManual = document.getElementById('mzazi-jina-manual').value.trim();
+
+    const profileData = {
+      user_id: currentUser.id,
+      jina: jinaValue,
+      jina_kamili: jinaValue,
+      full_name: jinaValue,
+      simu: document.getElementById('phone').value,
+      phone: document.getElementById('phone').value,
+      tarehe_kuzaliwa: document.getElementById('dob').value || null,
+      dob: document.getElementById('dob').value || null,
+      jinsia: document.getElementById('gender').value,
+      gender: document.getElementById('gender').value,
+      mji: document.getElementById('location').value,
+      makazi: document.getElementById('location').value,
+      location: document.getElementById('location').value,
+      kazi: document.getElementById('occupation').value,
+      occupation: document.getElementById('occupation').value,
+      cheo: document.getElementById('cheo').value,
+      maelezo: document.getElementById('maelezo').value,
+      hali: document.getElementById('hali').value || 'Hai',
+      na_akaunti: true,
+      updated_at: new Date().toISOString(),
+      // Mzazi
+      mzazi_id: selectedMzaziId || null,
+      jina_mzazi_maandishi: (!selectedMzaziId && mzaziManual) ? mzaziManual : null,
+    };
+    if (kizaziValue) profileData.kizazi = kizaziValue;
+    if (photoUrl) profileData.photo_url = photoUrl;
+
+    const res = await sbUpsert('wanafamilia', profileData);
+    if (res && res[0]?.id) {
+      myMemberId = res[0].id;
+    }
+    renderStatusPill();
+
+    // Kama kizazi changu kimebadilika (mzazi mpya), sasisha vizazi vya watoto/wajukuu wangu wote (recursive)
+    if (myMemberId && kizaziValue) {
+      await recalculateDescendantGenerations(myMemberId, kizaziValue);
+    }
+
+    // 3. Hifadhi wenzi na watoto wao
+    const cards = document.querySelectorAll('#wenzi-list .mwenza-card');
+    for (const card of cards) {
+      const idx = card.id.replace('mwenza-card-', '');
+      const jina = document.getElementById('mw-jina-' + idx)?.value || '';
+      if (!jina) continue;
+
+      const mwenzaData = {
+        member_id: myMemberId || currentUser.id,
+        jina: jina,
+        tarehe_ndoa: document.getElementById('mw-tarehe-' + idx)?.value || null,
+        hali: document.getElementById('mw-hali-' + idx)?.value || 'Ndoa',
+        simu: document.getElementById('mw-simu-' + idx)?.value || '',
+      };
+
+      let mwenzaId = card.dataset.id;
+      if (mwenzaId) {
+        await sbPatch('wenzi', mwenzaId, mwenzaData);
+      } else {
+        const mwenzaRes = await sbUpsert('wenzi', mwenzaData);
+        if (mwenzaRes && mwenzaRes[0]?.id) {
+          card.dataset.id = mwenzaRes[0].id;
+          mwenzaId = mwenzaRes[0].id;
+        }
+      }
+
+      if (mwenzaId) {
+        const watotoRows = document.querySelectorAll(`#watoto-list-${idx} .mtoto-row`);
+        for (const row of watotoRows) {
+          const inputs = row.querySelectorAll('input');
+          const sel = row.querySelector('select');
+          const jinaWatoto = inputs[0]?.value?.trim() || '';
+          if (!jinaWatoto) continue;
+
+          const tareheWatoto = inputs[1]?.value || null;
+          const jinsiaWatoto = sel?.value || 'M';
+          let wanafamiliaId = row.dataset.wfId || null;
+
+          // 1. Kwanza, hakikisha mtoto huyu yupo (au tengeneza) kwenye wanafamilia
+          //    Mzazi (mtumiaji aliyeingia) ndiye anayethibitisha uhusiano huu mwenyewe,
+          //    kwa hivyo mtoto anaonekana MOJA KWA MOJA kwenye mti na orodha — hahitaji
+          //    uthibitisho wa admin tena.
+          const memberData = {
+            jina: jinaWatoto,
+            jinsia: jinsiaWatoto,
+            tarehe_kuzaliwa: tareheWatoto,
+            na_akaunti: false,
+            ni_admin: false,
+            hali: 'Hai',
+            mzazi_id: myMemberId || null,
+            kizazi: kizaziValue ? kizaziValue + 1 : null,
+            inasubiri_uthibitisho: false
+          };
+
+          if (wanafamiliaId) {
+            await sbPatch('wanafamilia', wanafamiliaId, memberData);
+          } else {
+            const memberRes = await sbUpsert('wanafamilia', memberData);
+            if (memberRes && memberRes[0]?.id) {
+              wanafamiliaId = memberRes[0].id;
+              row.dataset.wfId = wanafamiliaId;
+            }
+          }
+
+          // 2. Hifadhi/sasisha rekodi ya mtoto kwenye jedwali la watoto, ikiunganishwa na wanafamilia_id
+          const mtotoData = {
+            mwenza_id: mwenzaId,
+            jina: jinaWatoto,
+            tarehe_kuzaliwa: tareheWatoto,
+            jinsia: jinsiaWatoto,
+            wanafamilia_id: wanafamiliaId || null
+          };
+
+          const mtotoId = row.dataset.id;
+          if (mtotoId) {
+            await sbPatch('watoto', mtotoId, mtotoData);
+          } else {
+            const mtotoRes = await sbUpsert('watoto', mtotoData);
+            if (mtotoRes && mtotoRes[0]?.id) {
+              row.dataset.id = mtotoRes[0].id;
+            }
+          }
+        }
+      }
+    }
+
+    // Sasisha localStorage
+    const updatedUser = { ...currentUser };
+    localStorage.setItem('sb_user', JSON.stringify(updatedUser));
+
+    showToast('✅ Taarifa zimehifadhiwa kikamilifu!');
+    document.getElementById('save-msg').textContent =
+      'Imehifadhiwa — ' + new Date().toLocaleTimeString('sw');
+    photoFile = null;
+
+  } catch(err) {
+    showToast('❌ Tatizo la kuhifadhi. Jaribu tena.', true);
+    console.error('Save error:', err);
+  }
+
+  btn.disabled = false;
+  btn.textContent = '💾 Hifadhi Mabadiliko';
+}
+
+// ── Sasisha vizazi vya watoto/wajukuu kiotomatiki (recursive, hadi kizazi cha 100+) ──
+async function recalculateDescendantGenerations(parentId, parentKizazi) {
+  try {
+    const children = await sbGet(`/rest/v1/wanafamilia?mzazi_id=eq.${parentId}&select=id,kizazi`);
+    if (!Array.isArray(children) || children.length === 0) return;
+    const newChildKizazi = parentKizazi + 1;
+    for (const child of children) {
+      if (child.kizazi !== newChildKizazi) {
+        await sbPatch('wanafamilia', child.id, { kizazi: newChildKizazi });
+      }
+      // endelea chini hadi wajukuu, vitukuu, n.k. — haina kikomo
+      await recalculateDescendantGenerations(child.id, newChildKizazi);
+    }
+  } catch(e) {
+    console.error('recalculateDescendantGenerations error', e);
+  }
+}
+
+// ── Delete Functions ──────────────────────────────────────
+async function deleteMyProfile() {
+  if (!confirm('Una uhakika wa kufuta wasifu wako? Hatua hii haiwezi kutenduliwa.')) return;
+  if (!confirm('UHAKIKA WA PILI: Taarifa zako ZOTE zitafutwa. Endelea?')) return;
+  try {
+    if (myMemberId) {
+      await sbDelete('wanafamilia', `id=eq.${myMemberId}`);
+    }
+    showToast('✅ Wasifu wako umefutwa.');
+    setTimeout(() => {
+      localStorage.removeItem('sb_token');
+      localStorage.removeItem('sb_user');
+      window.location.href = 'login.html';
+    }, 1500);
+  } catch(e) {
+    showToast('❌ Tatizo la kufuta wasifu.', true);
+  }
+}
+
+async function deleteAllData() {
+  if (!confirm('☢️ HATARI KUBWA: Hii itafuta TAARIFA ZOTE za wanafamilia wote. Una uhakika?')) return;
+  if (!confirm('UHAKIKA WA MWISHO: Haiwezi kutenduliwa. Endelea kufuta KILA KITU?')) return;
+  const typed = prompt('Andika neno "FUTA" kuthibitisha:');
+  if (typed !== 'FUTA') { showToast('Imesitishwa.', true); return; }
+  try {
+    await sbDelete('watoto', 'id=gt.0');
+    await sbDelete('wenzi', 'id=gt.0');
+    await sbDelete('wanafamilia', 'id=gt.0');
+    showToast('✅ Data zote zimefutwa.');
+    setTimeout(() => {
+      localStorage.removeItem('sb_token');
+      localStorage.removeItem('sb_user');
+      window.location.href = 'login.html';
+    }, 1500);
+  } catch(e) {
+    showToast('❌ Tatizo la kufuta data.', true);
+  }
+}
+
+// ── Helpers ──────────────────────────────────────────────
+function goHome() { window.location.href = 'index.html'; }
+
+let _toastTimer = null;
+function showToast(msg, isError = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (isError ? ' error' : '');
+  void t.offsetWidth;
+  t.classList.add('show');
+  if (_toastTimer) clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => {
+    t.classList.remove('show');
+    _toastTimer = null;
+  }, 3200);
+}
+
+// Funga dropdown ya mzazi kama mtumiaji anabonyeza nje
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.search-mzazi-wrap')) {
+    document.getElementById('mzazi-results').classList.remove('open');
+  }
+});
+</script>
+</body>
+</html>
